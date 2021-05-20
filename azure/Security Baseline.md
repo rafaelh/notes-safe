@@ -215,7 +215,6 @@ POST https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/
 * Require only private access to blob containers (Level 1) - Go to **Storage Account > Blob Service > Containers** and confirm that Public Access Level is Private.
 
 
-
 ## Create an Azure SQL Database baseline
 
 The following settings should be in place:
