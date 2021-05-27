@@ -3,6 +3,18 @@
 
 https://kubernetes.io/docs/home/
 
+* Liveness - Container is process is live. If liveness fails the configured amount of times, the pod is killed. If the application takes too long to start, an aggressive liveness check will cause a restart loop. Good for deadlocks or 100% CPU, otherwise it's better practice to use readiness.
+
+* Readiness - Container is Ready to recieve requests. Failing readiness doesn't kill the pod.
+* If liveness and readiness aren't configured, pods are always considered live and ready, resulting in downtime during updates, as new versions are immediately shoved into production.
+* Services route using labels and selectors (selector = key: value)
+* Pods are spun up by replicasets, which are managed by deployments. Replicasets manage transfer between versions, as specified by deployments.
+* Master contains etcd, scheduler, controller manager, management API and Kubelet
+* Nodes contain Kubelet
+* In a multi-master setup, the `etcd` databases synchronise using the RAFT protocol. The databases will elect a leader, and the others will follow.
+* When a change is made (such as a deployment), etcd is updated and it creates a replica set. The controller-manager listens for these changes, and creates pending records in the scheduler. The scheduler then sends these jobs to the correct nodes to provision.
+* In a multimaster setup, the controller manager and scheduler are turned off in all but the leader node. The leader node and etcd leader can be different.
+
 
 
 ## Setup

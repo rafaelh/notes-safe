@@ -20,3 +20,21 @@ minikube docker-env --shell=powershell
 
 minikube status
 
+
+
+```bash
+minikube docker-env
+
+# To point your shell to minikube's docker-daemon, run:
+eval $(minikube -p minikube docker-env)
+```
+
+
+
+
+
+```bash
+minikube addons enable dashboard
+
+```
+
