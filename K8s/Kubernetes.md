@@ -164,3 +164,39 @@ Persistent volume claim -> Persistent Volume -> Volume
                            This bit is cloud-specific
 ```
 
+What is the kube-bench equivalent for helm charts?
+
+
+
+
+# Security
+Any pod can talk to any pod, even with namespaces. Start with a deny-all ingress, then poke holes in it as necessary. Your CNI needs to support `NetworkPolicy` to manage these ingress and egress rules.
+
+Pod Security Policies can be set to constrain pods, but this is going to be deprecated.
+
+RBAC roles operate in authorized namespaces. They can be `Role` (current namespace) or `ClusterRole` (whole cluster). These are defined in yaml.
+
+```bash
+kubectl get roles --all-namespaces
+```
+
+Break the application running in a pod to gain access to the cluster.
+All pods can talk to all pods. Each pod is given a service account and a token, which by default doesn't allow you to talk to the kubelet. Unless it's special.
+
+* Use a distroless container that doesn't have a shell or other tools
+* Don't run containers as root (Open Policy Agent - OPA, or Styra)
+* Reduce pod privileges
+* Use a sandboxed runtime like gVisor or kata containers
+* Only trust signed images - Don't use random images on Dockerhub, in case they have been poisoned
+* Scann containers with anchore or snyk
+* Use NetworkPolicy to limit how traffic flows within the cluster
+* Use mTLS with a service mesh, so that all communication in the cluster is encrypted
+
+Look at Kyverno, Styra, kube-warden, kubeeval, conftest, OPA.
+
+If you take over a container, type `env` to get the ip address of the DNS. You can DOS coredns, which will hurt the rest of the cluster.
+
+https://learnk8s.io/validating-kubernetes-yaml
+
+
+
