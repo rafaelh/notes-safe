@@ -1,6 +1,6 @@
 # HTML Syntax
 
-``` html
+```html
 <!DOCTYPE html> <!-- This must be the first line of the document -->
 
 <html> <!-- This tag should enclose all html -->

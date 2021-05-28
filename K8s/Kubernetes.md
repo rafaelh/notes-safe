@@ -151,3 +151,16 @@ This is useful to debug pod -> service issues, skipping the ingress.
 
 
 Managed services set some of the flags for kubernetes, such as the time before moving pods (5 minutes). This is where it occasionally makes sense to build your own cluster, since that enables you to set some of these flags.
+
+## Secrets
+Just base64 encoded. By labeling them as secrets, they can be intercepted and stored in an encryption provider like hashicorp vault.
+
+## Volumes
+Survives container restart, removed when the pod dies. Persistent volumes are like a service for multiple storage backends. They are a global object in the cluster, not namespaced.
+
+```
+Persistent volume claim -> Persistent Volume -> Volume
+                           \-------------------------/
+                           This bit is cloud-specific
+```
+
